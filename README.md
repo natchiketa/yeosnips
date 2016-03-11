@@ -1,4 +1,4 @@
-# Yosnips
+# Yeosnips
 Yeoman-based dev environment for writing and deploying Snippets for Google Chrome Developer Tools.
 
 Built with Yeoman, using the excellent [Yeogurt](https://github.com/larsonjj/generator-yeogurt) generator.
