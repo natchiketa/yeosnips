@@ -1,0 +1,46 @@
+extends _layouts/base
+
+include _modules/link/link
+
+block content
+  .container
+    h1 Gitsnips
+    h2 To make new snippets
+    ul
+      li Create new <pre>.js</pre> files in <pre>/src/_scripts</pre>
+      li Run the snippet Gulp task: <pre>gulp snips</pre>
+    h2 To load snippets (do these steps starting from this page)
+    ul
+      li Open the Developer Tools (e.g. Cmd+Opt+i on OS X)
+      li Make sure the pane is detached
+      li Open Developer Tools while in the detached Developer Tools pane
+      li in the console enter the following:
+    textarea(id='snippet-code', rows=25, style="width: 100%; font-family: Source Code Pro, monospace;")
+
+        img.logo(src="images/yeogurt-swirl.png", width="75px")
+  code.version v1.5.2
+
+  script.
+    var textArea = document.querySelector('#snippet-code');
+    textArea.value = `
+      var request = new XMLHttpRequest();
+      request.open('GET', '${window.location.origin}/snippets.json', true);
+
+      request.onload = function() {
+        if (request.status >= 200 && request.status < 400) {
+          // Success!
+          var snips = JSON.parse(request.responseText);
+          InspectorFrontendHost.setPreference('scriptSnippets', JSON.stringify(snips));
+          InspectorFrontendHost.setPreference('scriptSnippets_lastIdentifier', snips[snips.length-1].id);
+        } else {
+          // We reached our target server, but it returned an error
+
+        }
+      };
+
+      request.onerror = function() {
+        // There was a connection error of some sort
+      };
+
+      request.send();`
+
